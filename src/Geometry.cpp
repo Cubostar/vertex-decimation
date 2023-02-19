@@ -171,6 +171,11 @@ unsigned int Geometry::GetIndicesSize(){
 	return m_indices.size();
 }
 
+// Retrives the number of vertices that we have.
+unsigned int Geometry::GetVerticesSize(){
+	return m_vertexPositions.size();
+}
+
 // Retrieves a pointer to the indices that we have
 unsigned int* Geometry::GetIndicesDataPtr(){
 	return m_indices.data();

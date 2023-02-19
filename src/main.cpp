@@ -4,6 +4,7 @@
 
 // Functionality that we created
 #include "SDLGraphicsProgram.hpp"
+#include <iostream>
 
 
 // The main application loop
@@ -18,7 +19,7 @@ void preloop(){
 // The setup
 
 int main(int argc, char** argv){
-
+	std::cout << "start" << std::endl;
 	// Create an instance of an object for a SDLGraphicsProgram
 	SDLGraphicsProgram mySDLGraphicsProgram(1280,720);
 	// Run our program forever

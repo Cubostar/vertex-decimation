@@ -29,7 +29,7 @@
 //
 class Object{
 public:
-    // Object Constructor
+    // Object constructor
     Object();
     // Object destructor
     ~Object();

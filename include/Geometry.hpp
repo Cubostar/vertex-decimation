@@ -12,6 +12,42 @@
 
 #include <vector>
 
+struct Vertex {
+    float x, y, z;
+
+    // Tests if two VertexData are equal
+	bool operator== (const Vertex &rhs){
+		if( (x == rhs.x) && (y == rhs.y) && (z == rhs.z)){
+			return true;
+		}
+		return false;
+	}
+
+    bool operator> (const Vertex &rhs) {
+        if (x != rhs.x) {
+            return (rhs.x > x);
+        } else if (y != rhs.y) {
+            return (rhs.y > y);
+        } else {
+            return rhs.z > z;
+        }
+    }
+
+    bool operator< (const Vertex &rhs) {
+        if (x != rhs.x) {
+            return (rhs.x < x);
+        } else if (y != rhs.y) {
+            return (rhs.y < y);
+        } else {
+            return rhs.z < z;
+        }
+    }
+};
+
+struct Triangle {
+    unsigned int i1, i2, i3;
+};
+
 // Purpose of this class is to store vertice and triangle information
 class Geometry{
 public:
@@ -26,7 +62,7 @@ public:
 	unsigned int GetBufferDataSize();
 	// Retrieve the Buffer Data Pointer
 	float* GetBufferDataPtr();
-	// Add a new vertex 
+	// Adds a vertex and associated texture coordinate.
 	void AddVertex(float x, float y, float z, float s, float t);
 	// Allows for adding one index at a time manually if 
 	// you know which vertices are needed to make a triangle.
@@ -40,6 +76,8 @@ public:
 	void MakeTriangle(unsigned int vert0, unsigned int vert1, unsigned int vert2);  
     // Retrieve how many indices there are
 	unsigned int GetIndicesSize();
+	// Retrive how many vertices there are
+	unsigned int GetVerticesSize();
     // Retrieve the pointer to the indices
 	unsigned int* GetIndicesDataPtr();
 

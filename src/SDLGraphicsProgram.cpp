@@ -1,10 +1,9 @@
 #include "SDLGraphicsProgram.hpp"
 #include "Camera.hpp"
-#include "Terrain.hpp"
 // Include the 'Renderer.hpp' which deteremines what
 // the graphics API is going to be for OpenGL
 #include "Renderer.hpp"
-
+#include "OBJ.hpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -85,6 +84,7 @@ void SDLGraphicsProgram::SetLoopCallback(std::function<void(void)> callback){
     // Create a renderer
     std::shared_ptr<Renderer> renderer = std::make_shared<Renderer>(m_width,m_height);    
 
+    /*
     // Create our terrain
     std::shared_ptr<Terrain> myTerrain = std::make_shared<Terrain>(512,512,"./assets/textures/terrain2.ppm");
     myTerrain->LoadTextures("./assets/textures/colormap.ppm","./assets/textures/detailmap.ppm");
@@ -92,9 +92,18 @@ void SDLGraphicsProgram::SetLoopCallback(std::function<void(void)> callback){
     // Create a node for our terrain 
     std::shared_ptr<SceneNode> terrainNode;
     terrainNode = std::make_shared<SceneNode>(myTerrain,"./shaders/vert.glsl","./shaders/frag.glsl");
+    */
+
+    // Create model
+    std::shared_ptr<OBJ> model = std::make_shared<OBJ>("./objects/bunny_centered.obj");
+
+    // Create a node for our model
+    std::shared_ptr<SceneNode> modelNode;
+    modelNode = std::make_shared<SceneNode>(model, "./shaders.vert.glsl", "./shaders/frag.glsl");
 
     // Set our SceneTree up
-    renderer->setRoot(terrainNode);
+    // renderer->setRoot(terrainNode);
+    renderer->setRoot(modelNode);
 
     // Set a default position for our camera
     renderer->GetCamera(0)->SetCameraEyePosition(125.0f,50.0f,500.0f);
@@ -110,8 +119,10 @@ void SDLGraphicsProgram::SetLoopCallback(std::function<void(void)> callback){
     // Set the camera speed for how fast we move.
     float cameraSpeed = 5.0f;
 
+    /*
     // Center our mouse
     SDL_WarpMouseInWindow(m_window,m_width/2,m_height/2);
+    */
 
     // Get a pointer to the keyboard state
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
@@ -122,7 +133,8 @@ void SDLGraphicsProgram::SetLoopCallback(std::function<void(void)> callback){
         // For our terrain setup the identity transform each frame
         // By default set the terrain node to the identity
         // matrix.
-        terrainNode->GetLocalTransform().LoadIdentity();
+        // terrainNode->GetLocalTransform().LoadIdentity();
+        modelNode->GetLocalTransform().LoadIdentity();
         // Invoke(i.e. call) the callback function
         callback();
 
@@ -133,6 +145,7 @@ void SDLGraphicsProgram::SetLoopCallback(std::function<void(void)> callback){
             if(e.type == SDL_QUIT){
                 quit = true;
             }
+            /*
             // Handle keyboard input for the camera class
             if(e.type==SDL_MOUSEMOTION){
                 // Handle mouse movements
@@ -140,8 +153,10 @@ void SDLGraphicsProgram::SetLoopCallback(std::function<void(void)> callback){
                 int mouseY = e.motion.y;
                 renderer->GetCamera(0)->MouseLook(mouseX, mouseY);
             }
+            */
         } // End SDL_PollEvent loop.
 
+        /*
         // Move left or right
         if(keyboardState[SDL_SCANCODE_LEFT]){
             renderer->GetCamera(0)->MoveLeft(cameraSpeed);
@@ -162,6 +177,7 @@ void SDLGraphicsProgram::SetLoopCallback(std::function<void(void)> callback){
         }else if(keyboardState[SDL_SCANCODE_LCTRL] || keyboardState[SDL_SCANCODE_RCTRL]){
             renderer->GetCamera(0)->MoveDown(cameraSpeed);
         }
+        */
 		
         // Update our scene through our renderer
         renderer->Update();
