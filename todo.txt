@@ -1,0 +1,4 @@
+- Transfer over working implementation (https://github.com/Fall22Graphics/finalproject-mesh-simplification)
+- Make camera perspective camera
+- Implement retriangulation from Schroeder et al 1992
+- Implement retriangulation from Li et al 2019
