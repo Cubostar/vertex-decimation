@@ -4,7 +4,7 @@
 
 
 #include "SDLGraphicsProgram.hpp"
-#include "OBJModel.hpp"
+#include "OBJ.hpp"
 #include <vector>
 #include <iostream>
 #include <string>
@@ -18,7 +18,7 @@ int main(int argc, char** argv){
 
 	std::string modelFilepath(argv[1]);
 
-	OBJModel obj(modelFilepath);
+	OBJ obj(modelFilepath);
 
 	// Create an instance of an object for a SDLGraphicsProgram
 	SDLGraphicsProgram mySDLGraphicsProgram(1280, 720, obj);

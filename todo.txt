@@ -1,4 +1,5 @@
 - Add classes and abstract
     - Geometry
+    - Fix Triangle and Vertex structs?
 - Implement retriangulation from Schroeder et al 1992
 - Implement retriangulation from Li et al 2019
