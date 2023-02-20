@@ -1,5 +1,9 @@
-#include "SDLGraphicsProgram.h"
+#include "SDLGraphicsProgram.hpp"
 #include "OBJModel.hpp"
+#include "glm/glm.hpp"
+#include "glm/ext.hpp"
+#include "glm/vec3.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 // Initialization function
 // Returns a true or false value based on successful completion of setup.
@@ -191,8 +195,14 @@ void SDLGraphicsProgram::update(bool* keys)
   // Resetup geometry
 	GenerateBuffers();
 
-  // Render
-  render();
+  glm::mat4 modelTransformMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
+  glm::mat4 projectionMatrix = glm::perspective(70.0f,(float)screenWidth/(float)screenHeight,0.1f,20.0f);
+
+  GLint modelTransformMatrixUniformLocation =  glGetUniformLocation(shader, "modelTransformMatrix");
+  GLint projectionMatrixUniformLocation = glGetUniformLocation(shader, "projectionMatrix");
+
+  glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1, GL_FALSE,&modelTransformMatrix[0][0]);
+  glUniformMatrix4fv(projectionMatrixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 }
 
 
@@ -258,6 +268,8 @@ void SDLGraphicsProgram::loop(){
 
 			// Update our scene
 			update(keys);
+      // Render
+      render();
       SDL_Delay(100);
       //Update screen of our specified window
       SDL_GL_SwapWindow(getSDLWindow());

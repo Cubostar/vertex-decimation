@@ -3,7 +3,7 @@
 // Please do not redistribute without asking permission.
 
 
-#include "SDLGraphicsProgram.h"
+#include "SDLGraphicsProgram.hpp"
 #include "OBJModel.hpp"
 #include <vector>
 #include <iostream>

@@ -16,13 +16,18 @@ layout(location=1)in vec3 vertexColor; // Our second attribute is the color attr
 // Do not forget this!
 out vec3 theColor;
 
+uniform mat4 modelTransformMatrix;
+uniform mat4 projectionMatrix;
+
 void main()
 {
   // gl_Position is a special glsl variable that tells us what
   // postiion to put things in.
   // It takes in exactly 4 things.
   // Note that 'w' (the 4th dimension) should be 1.
-  gl_Position = vec4(position.x, position.y, position.z, 1.0f);
+  vec4 oldPosition = vec4(position.x, position.y, position.z, 1.0f);
+
+  gl_Position = projectionMatrix * modelTransformMatrix * oldPosition;
 
   // Store the vertex color that we take in as what we will output
   // to the next stage in the graphics pipeline.
