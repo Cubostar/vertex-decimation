@@ -187,7 +187,7 @@ bool SDLGraphicsProgram::initGL(){
 
 
 // Update OpenGL
-void SDLGraphicsProgram::update(bool* keys)
+void SDLGraphicsProgram::update()
 {
   // Remove vertex
   obj.removeVertex();
@@ -196,6 +196,7 @@ void SDLGraphicsProgram::update(bool* keys)
 	GenerateBuffers();
 
   glm::mat4 modelTransformMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
+
   glm::mat4 projectionMatrix = glm::perspective(70.0f,(float)screenWidth/(float)screenHeight,0.1f,20.0f);
 
   GLint modelTransformMatrixUniformLocation =  glGetUniformLocation(shader, "modelTransformMatrix");
@@ -247,6 +248,8 @@ void SDLGraphicsProgram::loop(){
       keys[i] = false;
     }
 
+    const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+
     // While application is running
     while(!quit) {
       //Handle events on queue
@@ -256,22 +259,15 @@ void SDLGraphicsProgram::loop(){
         if(e.type == SDL_QUIT){
           quit = true;
         }
-
-        if (e.type == SDL_KEYDOWN) {
-          if (e.key.keysym.sym == SDLK_q) {
-            quit = true;
-          } else {
-           keys[e.key.keysym.sym] = !keys[e.key.keysym.sym]; 
-          }
-        }
       }
 
 			// Update our scene
-			update(keys);
+			update();
+
       // Render
       render();
-      SDL_Delay(100);
-      //Update screen of our specified window
+
+      // Update screen of our specified window
       SDL_GL_SwapWindow(getSDLWindow());
     }
 

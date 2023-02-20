@@ -35,7 +35,7 @@ public:
     // Setup OpenGL
     bool initGL();
     // Per frame update
-    void update(bool* keys);
+    void update();
     // Renders shapes to the screen
     void render();
     // loop that runs forever

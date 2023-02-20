@@ -31,7 +31,8 @@ void main()
 
   // Store the vertex color that we take in as what we will output
   // to the next stage in the graphics pipeline.
-  theColor = vertexColor;
+  vec3 temp = normalize(position);
+  theColor = vec3(abs(temp.x), abs(temp.y), abs(temp.z));
 
 }
 // ==================================================================
