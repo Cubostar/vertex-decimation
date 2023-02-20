@@ -1,29 +1,31 @@
 // Support Code written by Michael D. Shah
-// Last Updated: 6/15/21
+// Last Updated: 1/21/17
 // Please do not redistribute without asking permission.
 
-// Functionality that we created
-#include "SDLGraphicsProgram.hpp"
+
+#include "SDLGraphicsProgram.h"
+#include "OBJModel.hpp"
+#include <vector>
 #include <iostream>
-
-
-// The main application loop
-void loop(){
-}
-
-// Code that should execute prior to the loop
-void preloop(){
-
-}
-
-// The setup
+#include <string>
 
 int main(int argc, char** argv){
-	std::cout << "start" << std::endl;
+
+	if(argc < 2){
+        std::cout << "Please specify a .obj model" << std::endl;
+        return 0;
+    }
+
+	std::string modelFilepath(argv[1]);
+
+	OBJModel obj(modelFilepath);
+
 	// Create an instance of an object for a SDLGraphicsProgram
-	SDLGraphicsProgram mySDLGraphicsProgram(1280,720);
+	SDLGraphicsProgram mySDLGraphicsProgram(1280, 720, obj);
+	// Print out some useful information
+	mySDLGraphicsProgram.getOpenGLVersionInfo();
 	// Run our program forever
-	mySDLGraphicsProgram.SetLoopCallback(loop);
+	mySDLGraphicsProgram.loop();
 	// When our program ends, it will exit scope, the
 	// destructor will then be called and clean up the program.
 	return 0;
