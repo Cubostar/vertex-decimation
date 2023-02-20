@@ -40,11 +40,11 @@ struct Vertex {
     }
 };
 
-class OBJModel {
+class OBJ {
     public:
-    OBJModel(std::string filepath);
+    OBJ(std::string filepath);
 
-    ~OBJModel();
+    ~OBJ();
 
     inline std::vector<Triangle> getTriangleList() const { return m_TriangleList; };
 

@@ -1,5 +1,5 @@
 #include "SDLGraphicsProgram.hpp"
-#include "OBJModel.hpp"
+#include "OBJ.hpp"
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
 #include "glm/vec3.hpp"
@@ -8,7 +8,7 @@
 // Initialization function
 // Returns a true or false value based on successful completion of setup.
 // Takes in dimensions of window.
-SDLGraphicsProgram::SDLGraphicsProgram(int w, int h, OBJModel o):screenWidth(w),screenHeight(h),obj(o){
+SDLGraphicsProgram::SDLGraphicsProgram(int w, int h, OBJ o):screenWidth(w),screenHeight(h),obj(o){
   // Initialization flag
 	bool success = true;
   // String to hold any errors that occur.

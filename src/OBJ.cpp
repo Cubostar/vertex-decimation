@@ -1,4 +1,4 @@
-#include "OBJModel.hpp"
+#include "OBJ.hpp"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -6,7 +6,7 @@
 #include "glm/glm/gtx/string_cast.hpp"
 #include <algorithm>
 
-OBJModel::OBJModel(std::string filepath) {
+OBJ::OBJ(std::string filepath) {
     std::ifstream inOBJ;
 
     inOBJ.open(filepath);
@@ -114,7 +114,7 @@ OBJModel::OBJModel(std::string filepath) {
     std::cout << "Number of triangles: " << m_TriangleList.size() << std::endl;
 }
 
-void OBJModel::removeVertex() {
+void OBJ::removeVertex() {
     // Compute distance to averaged plane for each vertex
     std::vector<float> distances;
     for (int i = 0; i < m_VertexList.size(); i++) {
@@ -161,7 +161,7 @@ void OBJModel::removeVertex() {
     removeVertex(vidx);
 }
 
-void OBJModel::removeVertex(int vidx) {
+void OBJ::removeVertex(int vidx) {
     // Get indices of triangles containing vertex (comes sorted)
     std::vector<int> tidxs = getTriangles(vidx);
 
@@ -232,7 +232,7 @@ void OBJModel::removeVertex(int vidx) {
     }
 }
 
-std::vector<int> OBJModel::getTriangles(int vidx) {
+std::vector<int> OBJ::getTriangles(int vidx) {
     std::vector<int> tidxs;
     for (int i = 0; i < m_TriangleList.size(); i++) {
         Triangle t = m_TriangleList.at(i);
@@ -243,6 +243,6 @@ std::vector<int> OBJModel::getTriangles(int vidx) {
     return tidxs;
 }
 
-OBJModel::~OBJModel() {
+OBJ::~OBJ() {
 
 }

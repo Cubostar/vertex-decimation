@@ -22,14 +22,14 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <OBJModel.hpp>
+#include <OBJ.hpp>
 
 // This class sets up a full graphics program
 class SDLGraphicsProgram{
 public:
 
     // Constructor
-    SDLGraphicsProgram(int w, int h, OBJModel obj);
+    SDLGraphicsProgram(int w, int h, OBJ obj);
     // Destructor
     ~SDLGraphicsProgram();
     // Setup OpenGL
@@ -75,7 +75,7 @@ private:
     // Index Buffer Object
     GLuint indexBufferObject;
     // Object model
-    OBJModel obj;
+    OBJ obj;
 };
 
 #endif
