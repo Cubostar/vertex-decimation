@@ -24,20 +24,20 @@ OBJ::OBJ(std::string filepath) {
                 x = false;
                 y = false;
                 z = false;
-                Vertex v;
+                float x_val, y_val, z_val;
 
                 while (stream >> token) {
                     if (token[0] == 'v') {
                         continue;
                     } else {
                         if (!x) {
-                            v.x = std::stof(token);
+                            x_val = std::stof(token);
                             x = true;
                         } else if (!y) {
-                            v.y = std::stof(token);
+                            y_val = std::stof(token);
                             y = true;
                         } else if (!z) {
-                            v.z = std::stof(token);
+                            z_val = std::stof(token);
                             z = true;
                         } else {
                             continue;
@@ -45,7 +45,7 @@ OBJ::OBJ(std::string filepath) {
                     }
                 }
 
-                m_VertexList.push_back(v);
+                m_geometry.AddVertex(x_val, y_val, z_val);
 
             // Parse line containing triangle data
             } else if (line.rfind("f") == 0) {
@@ -63,13 +63,13 @@ OBJ::OBJ(std::string filepath) {
                     } else {
                         int pos = token.find('/');
                         if (!i1) {
-                            t.v1 = std::stoi(token.substr(0, pos)) - 1;
+                            t.i1 = std::stoi(token.substr(0, pos)) - 1;
                             i1 = true;
                         } else if (!i2) {
-                            t.v2 = std::stoi(token.substr(0, pos)) - 1;
+                            t.i2 = std::stoi(token.substr(0, pos)) - 1;
                             i2 = true;
                         } else if (!i3) {
-                            t.v3 = std::stoi(token.substr(0, pos)) - 1;
+                            t.i3 = std::stoi(token.substr(0, pos)) - 1;
                             i3 = true;
                         } else {
                             continue;
@@ -77,7 +77,7 @@ OBJ::OBJ(std::string filepath) {
                     }
                 }
 
-                m_TriangleList.push_back(t);
+                m_geometry.MakeTriangle(t.i1, t.i2, t.i3);
             } else {
                 continue;
             }
@@ -85,6 +85,9 @@ OBJ::OBJ(std::string filepath) {
     }
 
     // Compute normal vectors, areas, and centroids of triangles
+    m_geometry.Gen();
+
+    /*
     for (int i = 0; i < m_TriangleList.size(); i++) {
         Triangle t = m_TriangleList.at(i);
 
@@ -109,9 +112,10 @@ OBJ::OBJ(std::string filepath) {
         m_TriangleList.at(i).cy = centroid.y;
         m_TriangleList.at(i).cz = centroid.z;
     }
+    */
 
-    std::cout << "Number of vertices: " << m_VertexList.size() << std::endl;
-    std::cout << "Number of triangles: " << m_TriangleList.size() << std::endl;
+    std::cout << "Number of vertices: " << m_geometry.GetVerticesSize() << std::endl;
+    std::cout << "Number of triangles: " << m_geometry.GetIndicesSize() / 3 << std::endl;
 }
 
 void OBJ::removeVertex() {

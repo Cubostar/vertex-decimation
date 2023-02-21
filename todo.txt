@@ -1,5 +1,7 @@
 - Add classes and abstract
     - Geometry
+        - Fix normal vector calculation
     - Fix Triangle and Vertex structs?
 - Implement retriangulation from Schroeder et al 1992
 - Implement retriangulation from Li et al 2019
+- Add geometry shader (helpful for debugging)
