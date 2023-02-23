@@ -14,8 +14,8 @@
 #include "glm/glm/gtx/transform.hpp"
 
 struct Triangle {
-	ThreeVec v1, v2, v3;
-	unsigned int i1, i2, i3;
+	ThreeVec v1, v2, v3; // Vertices
+	unsigned int i1, i2, i3; // Indices of vertices in vertex list
 
 	ThreeVec normal;
 	ThreeVec centroid;
@@ -32,11 +32,14 @@ struct Triangle {
 		// Compute normal (not normalized)
 		glm::vec3 u = v2.toGLM() - v1.toGLM();
 		glm::vec3 v = v3.toGLM() - v1.toGLM();
-
+		glm::vec3 cross = glm::cross(u, v);
+		normal = ThreeVec(cross.x, cross.y, cross.z);
 
 		// Compute centroid
+		centroid = ThreeVec((v1.x + v2.x + v3.x) / 3, (v1.y + v2.y, v3.y) / 3, (v1.z + v2.z + v3.z) / 3);
 
 		// Compute area
+		area = glm::length(cross) / 2;
 	}
 };
 
@@ -107,9 +110,10 @@ public:
 	void AddVertex(float x, float y, float z);
     // Gen pushes all attributes into a single vector
 	void Gen();
-	// Functions for working with Indices
-	// Creates a triangle from 3 indices
-	void MakeTriangle(unsigned int vert0, unsigned int vert1, unsigned int vert2);  
+	// Creates a triangle from three indices
+	void MakeTriangle(unsigned int vert0, unsigned int vert1, unsigned int vert2);
+	// Removes a vertex and retriangulates hole (Schroeder et al 1992)
+	void RemoveVertex();
     // Retrieve how many indices there are
 	unsigned int GetIndicesSize();
 	// Retrive how many vertices there are
@@ -125,9 +129,11 @@ private:
     // Individual components of 
 	std::vector<ThreeVec> m_vertices;
 	std::vector<ThreeVec> m_normals;
-
-	// The indices for a indexed-triangle mesh
 	std::vector<Triangle> m_triangles;
+
+	// List of lists of indices of triangle list. Index j of the ith list is the index of
+	// a triangle containing the ith vertex in the vertex list.
+	std::vector<std::vector<unsigned int>> m_sharedTriangles;
 };
 
 
